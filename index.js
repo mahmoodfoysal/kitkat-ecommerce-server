@@ -6,7 +6,15 @@ const app = express()
 const port = process.env.PORT || 5000
 
 
-app.use(cors())
+app.use(cors(
+  {
+    origin: [
+      // 'http://localhost:5173/',
+      'ecommerce-vue3-compo-kitkat.web.app',
+      'ecommerce-vue3-compo-kitkat.firebaseapp.com'
+    ]
+  }
+))
 app.use(express.json());
 
 

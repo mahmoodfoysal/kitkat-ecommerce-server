@@ -36,6 +36,7 @@ async function run() {
     const productsCollection = database.collection("products");
     const brandCollection = database.collection("brands");
     const ordersCollection = database.collection("orders");
+    const reviewCollection = database.collection("reviews");
 
 
     // ########################## all post api are write here ###############################
@@ -74,6 +75,13 @@ async function run() {
         res.send(result);
     });
 
+    app.post('/reviews', async(req, res) => {
+      const postReviews = req.body;
+      console.log(postReviews);
+      const result = await reviewCollection.insertOne(postReviews);
+      res.send(result);
+    })
+
     // ####################### all get api are write here ######################### 
 
     app.get('/squreCardForHome', async(req, res) => {
@@ -104,6 +112,12 @@ async function run() {
         const result = await getOrders.toArray();
         res.send(result);
     });
+
+    app.get('/reviews', async(req, res) => {
+      const getReviews = reviewCollection.find();
+      const result = await getReviews.toArray();
+      res.send(result);
+    })
 
 
 

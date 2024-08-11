@@ -40,47 +40,191 @@ async function run() {
 
 
     // ########################## all post api are write here ###############################
-    app.post('/squreCardForHome', async(req, res) => {
-        const postSqureCard = req.body;
-        console.log(postSqureCard);
-        const result = await squreCardCollection.insertOne(postSqureCard);
-        res.send(result);
+    app.post('/squreCardForHome', async (req, res) => {
+      const data = req.body;
+      try {
+        if (data._id) {
+          // Update operation
+          const userId = data._id;
+          delete data._id; // Remove _id from the userData to prevent overriding it
+    
+          const result = await squreCardCollection.updateOne(
+            { 
+              _id: new ObjectId(userId) 
+            },
+            { 
+              $set: data 
+            }
+          );
+    
+          if (result.matchedCount === 0) {
+            return res.status(404).send({ error: 'User not found' });
+          }
+          res.send(result);
+        } else {
+          // Create operation
+          const result = await squreCardCollection.insertOne(data);
+          res.status(201).send(result);
+        }
+      } catch (error) {
+        res.status(500).send({ error: 'Failed to create or update user' });
+      }
     });
 
-    app.post('/categories', async(req, res) => {
-        const postCategory = req.body;
-        console.log(postCategory);
-        const result = await categoryCollection.insertOne(postCategory);
-        res.send(result);
+    app.post('/categories', async (req, res) => {
+      const data = req.body;
+      try {
+        if (data._id) {
+          // Update operation
+          const userId = data._id;
+          delete data._id; // Remove _id from the userData to prevent overriding it
+    
+          const result = await categoryCollection.updateOne(
+            { 
+              _id: new ObjectId(userId) 
+            },
+            { 
+              $set: data 
+            }
+          );
+    
+          if (result.matchedCount === 0) {
+            return res.status(404).send({ error: 'User not found' });
+          }
+          res.send(result);
+        } else {
+          // Create operation
+          const result = await categoryCollection.insertOne(data);
+          res.status(201).send(result);
+        }
+      } catch (error) {
+        res.status(500).send({ error: 'Failed to create or update user' });
+      }
     });
 
-    app.post('/products', async(req, res) => {
-        const postProducts = req.body;
-        console.log(postProducts);
-        const result = await productsCollection.insertOne(postProducts);
-        res.send(result);
+    app.post('/products', async (req, res) => {
+      const data = req.body;
+      try {
+        if (data._id) {
+          // Update operation
+          const userId = data._id;
+          delete data._id; // Remove _id from the userData to prevent overriding it
+    
+          const result = await productsCollection.updateOne(
+            { 
+              _id: new ObjectId(userId) 
+            },
+            { 
+              $set: data 
+            }
+          );
+    
+          if (result.matchedCount === 0) {
+            return res.status(404).send({ error: 'User not found' });
+          }
+          res.send(result);
+        } else {
+          // Create operation
+          const result = await productsCollection.insertOne(data);
+          res.status(201).send(result);
+        }
+      } catch (error) {
+        res.status(500).send({ error: 'Failed to create or update user' });
+      }
     });
 
-    app.post('/brands', async(req, res) => {
-        const postBrands = req.body;
-        console.log(postBrands);
-        const result = await brandCollection.insertOne(postBrands);
-        res.send(result);
+    app.post('/brands', async (req, res) => {
+      const data = req.body;
+      try {
+        if (data._id) {
+          // Update operation
+          const userId = data._id;
+          delete data._id; // Remove _id from the userData to prevent overriding it
+    
+          const result = await brandCollection.updateOne(
+            { 
+              _id: new ObjectId(userId) 
+            },
+            { 
+              $set: data 
+            }
+          );
+    
+          if (result.matchedCount === 0) {
+            return res.status(404).send({ error: 'User not found' });
+          }
+          res.send(result);
+        } else {
+          // Create operation
+          const result = await brandCollection.insertOne(data);
+          res.status(201).send(result);
+        }
+      } catch (error) {
+        res.status(500).send({ error: 'Failed to create or update user' });
+      }
     });
 
-    app.post('/orders', async(req, res) => {
-        const postOrders = req.body;
-        console.log(postOrders);
-        const result = await ordersCollection.insertOne(postOrders);
-        res.send(result);
+    app.post('/orders', async (req, res) => {
+      const data = req.body;
+      try {
+        if (data._id) {
+          // Update operation
+          const userId = data._id;
+          delete data._id; // Remove _id from the userData to prevent overriding it
+    
+          const result = await ordersCollection.updateOne(
+            { 
+              _id: new ObjectId(userId) 
+            },
+            { 
+              $set: data 
+            }
+          );
+    
+          if (result.matchedCount === 0) {
+            return res.status(404).send({ error: 'User not found' });
+          }
+          res.send(result);
+        } else {
+          // Create operation
+          const result = await ordersCollection.insertOne(data);
+          res.status(201).send(result);
+        }
+      } catch (error) {
+        res.status(500).send({ error: 'Failed to create or update user' });
+      }
     });
 
-    app.post('/reviews', async(req, res) => {
-      const postReviews = req.body;
-      console.log(postReviews);
-      const result = await reviewCollection.insertOne(postReviews);
-      res.send(result);
-    })
+    app.post('/reviews', async (req, res) => {
+      const data = req.body;
+      try {
+        if (data._id) {
+          // Update operation
+          const userId = data._id;
+          delete data._id; // Remove _id from the userData to prevent overriding it
+    
+          const result = await reviewCollection.updateOne(
+            { 
+              _id: new ObjectId(userId) 
+            },
+            { 
+              $set: data 
+            }
+          );
+    
+          if (result.matchedCount === 0) {
+            return res.status(404).send({ error: 'User not found' });
+          }
+          res.send(result);
+        } else {
+          // Create operation
+          const result = await reviewCollection.insertOne(data);
+          res.status(201).send(result);
+        }
+      } catch (error) {
+        res.status(500).send({ error: 'Failed to create or update user' });
+      }
+    });
 
     // ####################### all get api are write here ######################### 
 

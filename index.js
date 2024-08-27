@@ -31,7 +31,7 @@ async function run() {
 
     // ***************************code write here*************************** 
     const database = client.db("kitkat-e-commerce");
-    const squreCardCollection = database.collection("squreCardForHome");
+    const imageCategoryCollection = database.collection("imageCategory");
     const categoryCollection = database.collection("categories");
     const productsCollection = database.collection("products");
     const brandCollection = database.collection("brands");
@@ -41,7 +41,7 @@ async function run() {
     const adminCollection = database.collection('admin');
 
     // ########################## all post api are write here ###############################
-    app.post('/squreCardForHome', async (req, res) => {
+    app.post('/imageCategory', async (req, res) => {
       const data = req.body;
       try {
         if (data._id) {
@@ -49,7 +49,7 @@ async function run() {
           const userId = data._id;
           delete data._id; // Remove _id from the userData to prevent overriding it
     
-          const result = await squreCardCollection.updateOne(
+          const result = await imageCategoryCollection.updateOne(
             { 
               _id: new ObjectId(userId) 
             },
@@ -64,7 +64,7 @@ async function run() {
           res.send(result);
         } else {
           // Create operation
-          const result = await squreCardCollection.insertOne(data);
+          const result = await imageCategoryCollection.insertOne(data);
           res.status(201).send(result);
         }
       } catch (error) {
@@ -262,8 +262,8 @@ async function run() {
 
     // ####################### all get api are write here ######################### 
 
-    app.get('/squreCardForHome', async(req, res) => {
-        const getSqureCard = squreCardCollection.find();
+    app.get('/imageCategory', async(req, res) => {
+        const getSqureCard = imageCategoryCollection.find();
         const result = await getSqureCard.toArray();
         res.send(result);
     });
@@ -325,7 +325,14 @@ async function run() {
       const query = {_id: new ObjectId(id)}
       const result = await adminCollection.deleteOne(query);
       res.json(result);
-    })
+    });
+
+    app.delete('/imageCategory/:id', async(req, res) => {
+      const id = req.params.id;
+      const query = {_id: new ObjectId(id)}
+      const result = await imageCategoryCollection.deleteOne(query);
+      res.json(result);
+    });
 
 
   } finally {

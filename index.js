@@ -227,6 +227,20 @@ async function run() {
       }
     });
 
+    app.patch('/orders/:id', async(req, res) => {
+      const id = req.params.id;
+      const filter = {_id: new ObjectId(id)};
+      const updateStatus = req.body;
+      console.log(updateStatus);
+      const updatedDoc = {
+        $set: {
+          orderStatus: updateStatus.orderStatus
+        }
+      }
+      const result = await ordersCollection.updateOne(filter, updatedDoc);
+      res.send(result);
+    });
+
     // *********************** Dashboard API ******************************* 
     app.post('/admin', async (req, res) => {
       const data = req.body;
@@ -291,6 +305,30 @@ async function run() {
         res.send(result);
     });
 
+    app.get('/pending-orders', async(req, res) => {
+      const getOrders = ordersCollection.find({ orderStatus: "P" });
+      const result = await getOrders.toArray();
+      res.send(result);
+    });
+
+    app.get('/warehouse', async(req, res) => {
+      const getWarehouse = ordersCollection.find({ orderStatus: "W" });
+      const result = await getWarehouse.toArray();
+      res.send(result);
+    });
+
+    app.get('/shipping', async(req, res) => {
+      const getWarehouse = ordersCollection.find({ orderStatus: "S" });
+      const result = await getWarehouse.toArray();
+      res.send(result);
+    });
+
+    app.get('/delivery', async(req, res) => {
+      const getWarehouse = ordersCollection.find({ orderStatus: "D" });
+      const result = await getWarehouse.toArray();
+      res.send(result);
+    });
+
     app.get('/reviews', async(req, res) => {
       const getReviews = reviewCollection.find();
       const result = await getReviews.toArray();
@@ -319,7 +357,6 @@ async function run() {
     // ####################### all delete api are write here ######################### 
 
     // admin delete api 
-
     app.delete('/admin/:id', async(req, res) => {
       const id = req.params.id;
       const query = {_id: new ObjectId(id)}
@@ -327,10 +364,19 @@ async function run() {
       res.json(result);
     });
 
+    // delete image category api 
     app.delete('/imageCategory/:id', async(req, res) => {
       const id = req.params.id;
       const query = {_id: new ObjectId(id)}
       const result = await imageCategoryCollection.deleteOne(query);
+      res.json(result);
+    });
+
+    // product delete api 
+    app.delete('/products/:id', async(req, res) => {
+      const id = req.params.id;
+      const query = {_id: new ObjectId(id)}
+      const result = await productsCollection.deleteOne(query);
       res.json(result);
     });
 

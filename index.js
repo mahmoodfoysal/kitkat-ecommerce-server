@@ -305,7 +305,7 @@ async function run() {
         res.send(result);
     });
 
-    app.get('/pending-orders', async(req, res) => {
+    app.get('/pending', async(req, res) => {
       const getOrders = ordersCollection.find({ orderStatus: "P" });
       const result = await getOrders.toArray();
       res.send(result);
@@ -377,6 +377,14 @@ async function run() {
       const id = req.params.id;
       const query = {_id: new ObjectId(id)}
       const result = await productsCollection.deleteOne(query);
+      res.json(result);
+    });
+
+    // order delete api 
+    app.delete('/orders/:id', async(req, res) => {
+      const id = req.params.id;
+      const query = {_id: new ObjectId(id)}
+      const result = await ordersCollection.deleteOne(query);
       res.json(result);
     });
 

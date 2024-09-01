@@ -38,6 +38,7 @@ async function run() {
     const ordersCollection = database.collection("orders");
     const reviewCollection = database.collection("reviews");
     const sliderImageColllection = database.collection("slider-image");
+    const offerColllection = database.collection("offer");
     // ******** Dashboard Collection **********
     const adminCollection = database.collection('admin');
 
@@ -97,6 +98,37 @@ async function run() {
         } else {
           // Create operation
           const result = await sliderImageColllection.insertOne(data);
+          res.status(201).send(result);
+        }
+      } catch (error) {
+        res.status(500).send({ error: 'Failed to create or update user' });
+      }
+    });
+
+    app.post('/offer', async (req, res) => {
+      const data = req.body;
+      try {
+        if (data._id) {
+          // Update operation
+          const userId = data._id;
+          delete data._id; // Remove _id from the userData to prevent overriding it
+    
+          const result = await offerColllection.updateOne(
+            { 
+              _id: new ObjectId(userId) 
+            },
+            { 
+              $set: data 
+            }
+          );
+    
+          if (result.matchedCount === 0) {
+            return res.status(404).send({ error: 'User not found' });
+          }
+          res.send(result);
+        } else {
+          // Create operation
+          const result = await offerColllection.insertOne(data);
           res.status(201).send(result);
         }
       } catch (error) {
@@ -379,6 +411,12 @@ async function run() {
       res.send(result);
     });
 
+    app.get('/offer', async(req, res) => {
+      const getOffer = offerColllection.find();
+      const result = await getOffer.toArray();
+      res.send(result);
+    });
+
         // get user data for check admin 
         app.get('/admin/:email', async(req, res) => {
           const email = req.params.email;
@@ -430,6 +468,13 @@ async function run() {
       const id = req.params.id;
       const query = {_id: new ObjectId(id)}
       const result = await sliderImageColllection.deleteOne(query);
+      res.json(result);
+    });
+    
+    app.delete('/offer/:id', async(req, res) => {
+      const id = req.params.id;
+      const query = {_id: new ObjectId(id)}
+      const result = await offerColllection.deleteOne(query);
       res.json(result);
     });
 

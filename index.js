@@ -470,11 +470,18 @@ async function run() {
       const result = await sliderImageColllection.deleteOne(query);
       res.json(result);
     });
-    
+
     app.delete('/offer/:id', async(req, res) => {
       const id = req.params.id;
       const query = {_id: new ObjectId(id)}
       const result = await offerColllection.deleteOne(query);
+      res.json(result);
+    });
+
+    app.delete('/brands/:id', async(req, res) => {
+      const id = req.params.id;
+      const query = {_id: new ObjectId(id)}
+      const result = await brandCollection.deleteOne(query);
       res.json(result);
     });
 

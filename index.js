@@ -31,6 +31,7 @@ async function run() {
 
     // ***************************code write here*************************** 
     const database = client.db("kitkat-e-commerce");
+    // const database = client.db("test-server-e-commerce");
     const imageCategoryCollection = database.collection("imageCategory");
     const categoryCollection = database.collection("categories");
     const productsCollection = database.collection("products");

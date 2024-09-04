@@ -402,6 +402,14 @@ async function run() {
         res.send(result);
     });
 
+    app.get('/orders/:email', async (req, res) => {
+      const email = req.params.email;
+      const query = { email: email };
+      const getSpecificOrder = ordersCollection.find(query);
+      const result = await getSpecificOrder.toArray();
+      res.send(result);
+    });
+
     app.get('/pending', async(req, res) => {
       const getOrders = ordersCollection.find({ orderStatus: "P" });
       const result = await getOrders.toArray();
@@ -466,7 +474,7 @@ async function run() {
             isAdmin = true;
           }
           res.json({admin: isAdmin});
-        })
+        });
 
 
     // ####################### all delete api are write here ######################### 

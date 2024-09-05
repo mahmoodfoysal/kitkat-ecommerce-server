@@ -331,7 +331,11 @@ async function run() {
       console.log(updateStatus);
       const updatedDoc = {
         $set: {
-          orderStatus: updateStatus.orderStatus
+          orderStatus: updateStatus.orderStatus,
+          warehouse_date: updateStatus.warehouse_date,
+          shipping_date: updateStatus.shipping_date,
+          delivery_date: updateStatus.delivery_date,
+          complete_date: updateStatus.complete_date
         }
       }
       const result = await ordersCollection.updateOne(filter, updatedDoc);
@@ -464,17 +468,17 @@ async function run() {
       res.send(result);
     });
 
-        // get user data for check admin 
-        app.get('/admin/:email', async(req, res) => {
-          const email = req.params.email;
-          const query = {email: email};
-          const user = await adminCollection.findOne(query);
-          let isAdmin = false;
-          if(user?.role === 'Admin') {
-            isAdmin = true;
-          }
-          res.json({admin: isAdmin});
-        });
+    // get user data for check admin 
+    app.get('/admin/:email', async(req, res) => {
+      const email = req.params.email;
+      const query = {email: email};
+      const user = await adminCollection.findOne(query);
+      let isAdmin = false;
+      if(user?.role === 'Admin') {
+        isAdmin = true;
+      }
+      res.json({admin: isAdmin});
+    });
 
 
     // ####################### all delete api are write here ######################### 

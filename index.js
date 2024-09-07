@@ -342,6 +342,25 @@ async function run() {
       res.send(result);
     });
 
+    app.patch('/stock/:id', async (req, res) => {
+      try {
+          const id = req.params.id;
+          const filter = { _id: new ObjectId(id) };
+          const updateStock = req.body;
+          const updatedDoc = {
+              $set: {
+                  stock: updateStock.stock,
+              }
+          };
+          const result = await productsCollection.updateOne(filter, updatedDoc);
+          res.send(result);
+      } catch (error) {
+          console.error('Error updating stock:', error);
+          res.status(500).send({ error: 'Failed to update stock' });
+      }
+  });
+  
+
     // *********************** Dashboard API ******************************* 
     app.post('/admin', async (req, res) => {
       const data = req.body;

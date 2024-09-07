@@ -359,6 +359,24 @@ async function run() {
           res.status(500).send({ error: 'Failed to update stock' });
       }
   });
+
+    app.patch('/status/:id', async (req, res) => {
+      try {
+          const id = req.params.id;
+          const filter = { _id: new ObjectId(id) };
+          const updateStatus = req.body;
+          const updatedDoc = {
+              $set: {
+                status: updateStatus.status,
+              }
+          };
+          const result = await productsCollection.updateOne(filter, updatedDoc);
+          res.send(result);
+      } catch (error) {
+          console.error('Error updating stock:', error);
+          res.status(500).send({ error: 'Failed to update stock' });
+      }
+  });
   
 
     // *********************** Dashboard API ******************************* 
